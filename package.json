@@ -1,7 +1,7 @@
 {
   "name": "slate-md-decorations",
   "version": "1.0.0",
-  "description": "",
+  "description": "Parses strings as markdown and returns decorations for inline styles",
   "main": "dist/build.js",
   "scripts": {
     "mrm": "mrm --dir=node_modules/@adonisjs/mrm-preset",
@@ -52,5 +52,17 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thetutlage/slate-md-decorations.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thetutlage/slate-md-decorations/issues"
+  },
+  "homepage": "https://github.com/thetutlage/slate-md-decorations#readme"
 }
