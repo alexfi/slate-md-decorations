@@ -1,0 +1,35 @@
+{
+  "name": "slate-md-decorations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "mrm": "mrm --dir=node_modules/@adonisjs/mrm-preset",
+    "pretest": "npm run lint",
+    "commit": "git-cz",
+    "test": "japa",
+    "lint": "standard"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "remark": "^9.0.0"
+  },
+  "devDependencies": {
+    "@adonisjs/mrm-preset": "^1.0.0",
+    "commitizen": "^2.10.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "immutable": "^3.8.2",
+    "japa": "^1.0.6",
+    "japa-cli": "^1.0.1",
+    "mrm": "^1.1.1",
+    "slate": "^0.34.0",
+    "standard": "^11.0.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}
