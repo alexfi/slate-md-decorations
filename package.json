@@ -2,7 +2,7 @@
   "name": "slate-md-decorations",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/build.js",
   "scripts": {
     "mrm": "mrm --dir=node_modules/@adonisjs/mrm-preset",
     "pretest": "npm run lint",
@@ -13,8 +13,7 @@
     "prepublishOnly": "npm run build"
   },
   "files": [
-    "src",
-    "index.js",
+    "dist",
     "README.md",
     "CONTRIBUTING.md",
     "LICENSE.md"
