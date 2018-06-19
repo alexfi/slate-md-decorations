@@ -10,9 +10,16 @@
     "test": "japa",
     "lint": "standard"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "files": [
+    "src",
+    "index.js",
+    "README.md",
+    "CONTRIBUTING.md",
+    "LICENSE.md"
+  ],
+  "keywords": ["slate.js", "slate"],
+  "author": "virk",
+  "license": "MIT",
   "dependencies": {
     "remark": "^9.0.0"
   },
