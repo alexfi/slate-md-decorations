@@ -5,7 +5,7 @@
 [![travis-image]][travis-url]
 [![npm-image]][npm-url]
 
-**The package size is `3.7KB` minified. However, it has peer dependencies on `remark` and `unified`, which may increase the bundle size.**
+**The package size is `3.7KB` minified. However, it has peer dependencies on `remark-parse` and `unified`, which may increase the bundle size.**
 
 ## Installation
 
@@ -14,6 +14,12 @@ npm i slate-md-decorations
 
 # for yarn
 yarn add slate-md-decorations
+```
+
+Also make sure to install required `peer dependencies`.
+
+```shell
+npm i remark-parse unified
 ```
 
 ## Usage
