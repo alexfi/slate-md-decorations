@@ -8,7 +8,9 @@
     "pretest": "npm run lint",
     "commit": "git-cz",
     "test": "japa",
-    "lint": "standard"
+    "lint": "standard",
+    "build": "webpack",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "src",
@@ -17,14 +19,22 @@
     "CONTRIBUTING.md",
     "LICENSE.md"
   ],
-  "keywords": ["slate.js", "slate"],
+  "keywords": [
+    "slate.js",
+    "slate"
+  ],
   "author": "virk",
   "license": "MIT",
   "dependencies": {
-    "remark": "^9.0.0"
+    "remark-parse": "^5.0.0",
+    "unified": "^7.0.0"
   },
   "devDependencies": {
     "@adonisjs/mrm-preset": "^1.0.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
     "commitizen": "^2.10.1",
     "cz-conventional-changelog": "^2.1.0",
     "immutable": "^3.8.2",
@@ -32,7 +42,10 @@
     "japa-cli": "^1.0.1",
     "mrm": "^1.1.1",
     "slate": "^0.34.0",
-    "standard": "^11.0.1"
+    "standard": "^11.0.1",
+    "uglifyjs-webpack-plugin": "^1.2.5",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8"
   },
   "config": {
     "commitizen": {

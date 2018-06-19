@@ -7,7 +7,8 @@
 * file that was distributed with this source code.
 */
 
-const remark = require('remark')
+const unified = require('unified')
+const markdown = require('remark-parse')
 
 /**
  * Converts markdown text to ast
@@ -19,7 +20,8 @@ const remark = require('remark')
  * @return {Objecr}
  */
 module.exports = function (md) {
-  return remark()
+  return unified()
+    .use(markdown)
     .use(function () {
       this.Compiler = function (node) {
         return node
