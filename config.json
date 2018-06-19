@@ -1,6 +1,7 @@
 {
   "core": false,
   "ts": false,
+  "name": "Harminder Virk",
   "license": "MIT",
   "services": [
     "travis"
