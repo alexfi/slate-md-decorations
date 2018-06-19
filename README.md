@@ -5,7 +5,7 @@
 [![travis-image]][travis-url]
 [![npm-image]][npm-url]
 
-**The package size is `83KB` minified and `31.5 kB` gzipped. This is due to the usage of remark and unified and there is no way around escaping these dependencies.**
+**The package size is `3.7KB` minified. However, it has peer dependencies on `remark` and `unified`, which may increase the bundle size.**
 
 ## Installation
 

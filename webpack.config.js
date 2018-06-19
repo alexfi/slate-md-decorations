@@ -7,9 +7,21 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'build.js',
-    library: 'mdDecorations',
-    libraryTarget: 'umd',
-    globalObject: 'typeof self !== \'undefined\' ? self : this'
+    libraryTarget: 'commonjs2'
+  },
+  externals: {
+    'remark-parse': {
+      commonjs: 'remark-parse',
+      commonjs2: 'remark-parse',
+      amd: 'remark-parse',
+      root: 'remark-parse'
+    },
+    'unified': {
+      commonjs: 'unified',
+      commonjs2: 'unified',
+      amd: 'unified',
+      root: 'unified'
+    }
   },
   module: {
     rules: [
