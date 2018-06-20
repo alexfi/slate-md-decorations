@@ -105,16 +105,16 @@ test('return decorations for link', (assert) => {
   assert.deepEqual(decorations, [
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 6,
+      anchorOffset: 7,
       focusKey: textLeaf.key,
-      focusOffset: 14,
+      focusOffset: 13,
       marks: [{ type: 'linkText' }]
     },
     {
       anchorKey: textLeaf.key,
       anchorOffset: 15,
       focusKey: textLeaf.key,
-      focusOffset: 34,
+      focusOffset: 33,
       marks: [{ type: 'linkUrl' }]
     }
   ])
@@ -130,9 +130,9 @@ test('return decorations for link with title', (assert) => {
   assert.deepEqual(decorations, [
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 6,
+      anchorOffset: 7,
       focusKey: textLeaf.key,
-      focusOffset: 14,
+      focusOffset: 13,
       marks: [{ type: 'linkText' }]
     },
     {
@@ -146,7 +146,7 @@ test('return decorations for link with title', (assert) => {
       anchorKey: textLeaf.key,
       anchorOffset: 34,
       focusKey: textLeaf.key,
-      focusOffset: 43,
+      focusOffset: 42,
       marks: [{ type: 'linkTitle' }]
     }
   ])
@@ -162,14 +162,14 @@ test('return decorations for definition', (assert) => {
   assert.deepEqual(decorations, [
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 0,
+      anchorOffset: 1,
       focusKey: textLeaf.key,
-      focusOffset: 4,
+      focusOffset: 2,
       marks: [{ type: 'definitionText' }]
     },
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 5,
+      anchorOffset: 4,
       focusKey: textLeaf.key,
       focusOffset: 15,
       marks: [{ type: 'definitionUrl' }]
@@ -187,14 +187,14 @@ test('return decorations for definition with title', (assert) => {
   assert.deepEqual(decorations, [
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 0,
+      anchorOffset: 1,
       focusKey: textLeaf.key,
-      focusOffset: 4,
+      focusOffset: 2,
       marks: [{ type: 'definitionText' }]
     },
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 5,
+      anchorOffset: 4,
       focusKey: textLeaf.key,
       focusOffset: 15,
       marks: [{ type: 'definitionUrl' }]
@@ -219,9 +219,9 @@ test('allow bold inside anchor tag', (assert) => {
   assert.deepEqual(decorations, [
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 0,
+      anchorOffset: 1,
       focusKey: textLeaf.key,
-      focusOffset: 12,
+      focusOffset: 11,
       marks: [{ type: 'linkText' }]
     },
     {
@@ -235,7 +235,7 @@ test('allow bold inside anchor tag', (assert) => {
       anchorKey: textLeaf.key,
       anchorOffset: 13,
       focusKey: textLeaf.key,
-      focusOffset: 24,
+      focusOffset: 23,
       marks: [{ type: 'linkUrl' }]
     }
   ])
@@ -251,9 +251,9 @@ test('allow emphasis inside anchor tag', (assert) => {
   assert.deepEqual(decorations, [
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 0,
+      anchorOffset: 1,
       focusKey: textLeaf.key,
-      focusOffset: 10,
+      focusOffset: 9,
       marks: [{ type: 'linkText' }]
     },
     {
@@ -267,7 +267,7 @@ test('allow emphasis inside anchor tag', (assert) => {
       anchorKey: textLeaf.key,
       anchorOffset: 11,
       focusKey: textLeaf.key,
-      focusOffset: 22,
+      focusOffset: 21,
       marks: [{ type: 'linkUrl' }]
     }
   ])
@@ -283,17 +283,25 @@ test('return decorations for definition reference', (assert) => {
   assert.deepEqual(decorations, [
     {
       anchorKey: textLeaf.key,
-      anchorOffset: 6,
+      anchorOffset: 7,
       focusKey: textLeaf.key,
-      focusOffset: 14,
+      focusOffset: 13,
       marks: [{ type: 'linkReferenceText' }]
     },
     {
       anchorKey: textLeaf.key,
       anchorOffset: 15,
       focusKey: textLeaf.key,
-      focusOffset: 22,
+      focusOffset: 21,
       marks: [{ type: 'linkReferenceUrl' }]
     }
   ])
+})
+
+test('do not return decorations when link is empty', (assert) => {
+  const template = 'Visit []()'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  assert.deepEqual(decorations, [])
 })

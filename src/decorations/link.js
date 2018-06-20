@@ -8,6 +8,7 @@
 */
 
 const getRange = require('../getRange')
+const offset = require('../offset')
 
 /**
  * Adds links decorations
@@ -22,35 +23,27 @@ const getRange = require('../getRange')
  * @return {void}
  */
 module.exports = function link (node, textBlocks, decorations, reparse) {
-  /**
-   * The text for the link is present as a children on the node.
-   * We add `1` to the end offset, which is for the closing `]`
-   * bracket.
-   */
-  const linkTextOffset = node.children[0].position.end.offset + 1
+  if (!node.children.length) {
+    return
+  }
 
   /**
-   * If link has a title, we need to subtract the length of title
-   * from the offset to get the correct offset of just the URL.
-   *
-   * Also we remove another 4 characters from the offset for.
-   *
-   * - ` ` Blank space between URL and the title.
-   * - `"` Opening quote
-   * - `"` Closing quote
-   * - `]` Closing bracket.
+   * Below is the list of offsets for all different pieces inside
+   * a link
    */
-  let linkUrlOffset = node.position.end.offset
-  if (node.title) {
-    linkUrlOffset = linkUrlOffset - node.title.length - 4
-  }
+  const endOffset = offset.closingBrace(node.position.end.offset)
+  const linkTextStartOffset = node.children[0].position.start.offset
+  const linkTextEndOffset = node.children[0].position.end.offset
+  const linkUrlStartOffset = offset.linkStart(linkTextEndOffset)
+  const linkUrlEndOffset = offset.linkEnd(endOffset, node.title)
+  const linkTitleStartOffset = offset.titleStart(linkUrlEndOffset)
 
   /**
    * Push text to the decorations
    */
   decorations.push(getRange(textBlocks, node, {
-    start: node.position.start.offset,
-    end: linkTextOffset,
+    start: linkTextStartOffset,
+    end: linkTextEndOffset,
     marks: [{ type: 'linkText' }]
   }))
 
@@ -72,8 +65,8 @@ module.exports = function link (node, textBlocks, decorations, reparse) {
    * Add url to the decorations
    */
   decorations.push(getRange(textBlocks, node, {
-    start: linkTextOffset + 1,
-    end: linkUrlOffset,
+    start: linkUrlStartOffset,
+    end: linkUrlEndOffset,
     marks: [{ type: 'linkUrl' }]
   }))
 
@@ -83,8 +76,8 @@ module.exports = function link (node, textBlocks, decorations, reparse) {
    */
   if (node.title) {
     decorations.push(getRange(textBlocks, node, {
-      start: linkUrlOffset + 1,
-      end: node.position.end.offset,
+      start: linkTitleStartOffset,
+      end: endOffset,
       marks: [{ type: 'linkTitle' }]
     }))
   }

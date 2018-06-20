@@ -8,6 +8,7 @@
 */
 
 const getRange = require('../getRange')
+const offset = require('../offset')
 
 /**
  * Adds linkReference decorations
@@ -22,19 +23,25 @@ const getRange = require('../getRange')
  * @return {void}
  */
 module.exports = function linkReference (node, textBlocks, decorations, reparse) {
+  if (!node.children.length) {
+    return
+  }
+
   /**
-   * The text for the link is present as a children on the node.
-   * We add `1` to the end offset, which is for the closing `]`
-   * bracket.
+   * Below is the list of offsets for all different pieces inside
+   * a link reference
    */
-  const linkTextOffset = node.children[0].position.end.offset + 1
+  const linkTextStartOffset = node.children[0].position.start.offset
+  const linkTextEndOffset = node.children[0].position.end.offset
+  const linkUrlStartOffset = offset.linkStart(linkTextEndOffset)
+  const linkUrlEndOffset = offset.closingBrace(node.position.end.offset)
 
   /**
    * Push text to the node
   */
   decorations.push(getRange(textBlocks, node, {
-    start: node.position.start.offset,
-    end: linkTextOffset,
+    start: linkTextStartOffset,
+    end: linkTextEndOffset,
     marks: [{ type: 'linkReferenceText' }]
   }))
 
@@ -56,8 +63,8 @@ module.exports = function linkReference (node, textBlocks, decorations, reparse)
    * Add referenceUrl decoration
    */
   decorations.push(getRange(textBlocks, node, {
-    start: linkTextOffset + 1,
-    end: node.position.end.offset,
+    start: linkUrlStartOffset,
+    end: linkUrlEndOffset,
     marks: [{ type: 'linkReferenceUrl' }]
   }))
 }

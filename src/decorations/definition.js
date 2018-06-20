@@ -8,6 +8,7 @@
 */
 
 const getRange = require('../getRange')
+const offset = require('../offset')
 
 /**
  * Adds definition decorations
@@ -22,35 +23,21 @@ const getRange = require('../getRange')
  */
 module.exports = function definition (node, textBlocks, decorations) {
   /**
-   * We add 3 to the end offset of identifier. This includes
-   * - `[` the starting bracket
-   * - `]` the closing bracket
-   * - `:` The colon
+   * Offsets for all pieces inside definition
    */
-  const identifierOffset = node.identifier.length + 3
-
-  /**
-   * If there is a title in the definition url, then we need to
-   * subtract the length of title and another 3 for.
-   *
-   * - `"` opening quote
-   * - `"` closing quote
-   * - `]` closing bracket after the title
-   *
-   * Example:
-   * [1]: google.com "Google"
-   */
-  let definitionUrlOffset = node.position.end.offset
-  if (node.title) {
-    definitionUrlOffset = definitionUrlOffset - node.title.length - 3
-  }
+  const identifierStartOffset = offset.openingBrace(node.position.start.offset)
+  const identifierEndOffset = offset.identifier(node.identifier.length)
+  const endOffset = node.position.end.offset
+  const linkUrlStartOffset = offset.definitionLinkStart(identifierEndOffset)
+  const linkUrlEndOffset = offset.definitionLinkEnd(endOffset, node.title)
+  const linkTitleStartOffset = offset.titleStart(linkUrlEndOffset)
 
   /**
    * Push the definition text to the decorations
    */
   decorations.push(getRange(textBlocks, node, {
-    start: node.position.start.offset,
-    end: identifierOffset,
+    start: identifierStartOffset,
+    end: identifierEndOffset,
     marks: [{ type: 'definitionText' }]
   }))
 
@@ -58,8 +45,8 @@ module.exports = function definition (node, textBlocks, decorations) {
    * Push the definition url to the decorations
    */
   decorations.push(getRange(textBlocks, node, {
-    start: identifierOffset + 1,
-    end: definitionUrlOffset,
+    start: linkUrlStartOffset,
+    end: linkUrlEndOffset,
     marks: [{ type: 'definitionUrl' }]
   }))
 
@@ -69,8 +56,8 @@ module.exports = function definition (node, textBlocks, decorations) {
    */
   if (node.title) {
     decorations.push(getRange(textBlocks, node, {
-      start: definitionUrlOffset + 1,
-      end: node.position.end.offset,
+      start: linkTitleStartOffset,
+      end: endOffset,
       marks: [{ type: 'definitionTitle' }]
     }))
   }
