@@ -305,3 +305,78 @@ test('do not return decorations when link is empty', (assert) => {
   const decorations = getDecorations(node)
   assert.deepEqual(decorations, [])
 })
+
+test('allow inline code inside strong', (assert) => {
+  const template = '**Hello `world`**'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 0,
+      focusKey: textLeaf.key,
+      focusOffset: 17,
+      marks: [{ type: 'strong' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 8,
+      focusKey: textLeaf.key,
+      focusOffset: 15,
+      marks: [{ type: 'inlineCode' }]
+    }
+  ])
+})
+
+test('allow strong inside emphasis', (assert) => {
+  const template = '*Hello **world** *'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 0,
+      focusKey: textLeaf.key,
+      focusOffset: 18,
+      marks: [{ type: 'emphasis' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 7,
+      focusKey: textLeaf.key,
+      focusOffset: 16,
+      marks: [{ type: 'strong' }]
+    }
+  ])
+})
+
+test('allow strong inside strike', (assert) => {
+  const template = '~~Hello **world**~~'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 0,
+      focusKey: textLeaf.key,
+      focusOffset: 19,
+      marks: [{ type: 'strike' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 8,
+      focusKey: textLeaf.key,
+      focusOffset: 17,
+      marks: [{ type: 'strong' }]
+    }
+  ])
+})

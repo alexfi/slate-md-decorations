@@ -14,16 +14,21 @@ const getRange = require('../getRange')
  *
  * @method strike
  *
- * @param  {Object}   node
- * @param  {Array}    textBlocks
- * @param  {Array}    decorations
+ * @param  {Object}    node
+ * @param  {Array}     textBlocks
+ * @param  {Array}     decorations
+ * @param  {Function}  reparse
  *
  * @return {void}
  */
-module.exports = function strike (node, textBlocks, decorations) {
+module.exports = function strike (node, textBlocks, decorations, reparse) {
   decorations.push(getRange(textBlocks, node, {
     start: node.position.start.offset,
     end: node.position.end.offset,
     marks: [{ type: 'strike' }]
   }))
+
+  node.children.forEach((child) => {
+    reparse(child, textBlocks, decorations)
+  })
 }
