@@ -5,7 +5,7 @@
   "main": "dist/build.js",
   "scripts": {
     "mrm": "mrm --dir=node_modules/@adonisjs/mrm-preset",
-    "pretest": "npm run lint",
+    "pretest": "npm run lint && npm run build",
     "commit": "git-cz",
     "test": "japa",
     "lint": "standard",
