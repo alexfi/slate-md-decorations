@@ -380,3 +380,117 @@ test('allow strong inside strike', (assert) => {
     }
   ])
 })
+
+test('return decorations for images', (assert) => {
+  const template = '![Alt text](foo.jpg)'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 2,
+      focusKey: textLeaf.key,
+      focusOffset: 10,
+      marks: [{ type: 'imageAlt' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 12,
+      focusKey: textLeaf.key,
+      focusOffset: 19,
+      marks: [{ type: 'imageUrl' }]
+    }
+  ])
+})
+
+test('return decorations for images without alt', (assert) => {
+  const template = '![](foo.jpg)'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 2,
+      focusKey: textLeaf.key,
+      focusOffset: 2,
+      marks: [{ type: 'imageAlt' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 4,
+      focusKey: textLeaf.key,
+      focusOffset: 11,
+      marks: [{ type: 'imageUrl' }]
+    }
+  ])
+})
+
+test('return decorations for images with title', (assert) => {
+  const template = '![](foo.jpg "Foo")'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 2,
+      focusKey: textLeaf.key,
+      focusOffset: 2,
+      marks: [{ type: 'imageAlt' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 4,
+      focusKey: textLeaf.key,
+      focusOffset: 11,
+      marks: [{ type: 'imageUrl' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 12,
+      focusKey: textLeaf.key,
+      focusOffset: 17,
+      marks: [{ type: 'imageTitle' }]
+    }
+  ])
+})
+
+test('return decorations for images with title and alt', (assert) => {
+  const template = '![hello](foo.jpg "Foo")'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 2,
+      focusKey: textLeaf.key,
+      focusOffset: 7,
+      marks: [{ type: 'imageAlt' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 9,
+      focusKey: textLeaf.key,
+      focusOffset: 16,
+      marks: [{ type: 'imageUrl' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 17,
+      focusKey: textLeaf.key,
+      focusOffset: 22,
+      marks: [{ type: 'imageTitle' }]
+    }
+  ])
+})

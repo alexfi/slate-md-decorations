@@ -15,5 +15,6 @@ module.exports = {
   delete: require('./strike'),
   definition: require('./definition'),
   linkReference: require('./linkReference'),
-  paragraph: require('./paragraph')
+  paragraph: require('./paragraph'),
+  image: require('./image')
 }
