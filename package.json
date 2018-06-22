@@ -1,6 +1,6 @@
 {
   "name": "slate-md-decorations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Parses strings as markdown and returns decorations for inline styles",
   "main": "dist/build.js",
   "scripts": {

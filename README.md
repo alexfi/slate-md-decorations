@@ -1,6 +1,6 @@
 # Slate Markdown Decorations
 
-> Parses strings as markdown and returns decorations for inline styles. [Live demo]()
+> Parses strings as markdown and returns decorations for inline styles.
 
 [![travis-image]][travis-url]
 [![npm-image]][npm-url]
@@ -184,7 +184,7 @@ The text wrapped inside `** **` will have mark of type `strong`.
 ]
 ```
 
-#### definition reference
+#### linkReference
 
 ```js
 // Visit [Google][google]
@@ -207,21 +207,46 @@ The text wrapped inside `** **` will have mark of type `strong`.
 ]
 ```
 
+## Headings
+
+You can ignore headings for the most part. I wanted to some uniques in the way I show `hashes ##`, So I created a mark for this one too.
+
+```js
+// ## Hello world
+
+assert.deepEqual(decorations, [
+  {
+    anchorKey: '2',
+    anchorOffset: 0,
+    focusKey: '2',
+    focusOffset: 2,
+    marks: [{ type: 'headingHash' }]
+  },
+  {
+    anchorKey: '2',
+    anchorOffset: 3,
+    focusKey: '2',
+    focusOffset: 14,
+    marks: [{ type: 'headingText' }]
+  }
+])
+```
+
 ## Change log
 
-The change log can be found in the [CHANGELOG.md](https://github.com/thetutlage/slate-md-decorations/CHANGELOG.md) file.
+The change log can be found in the [CHANGELOG.md](https://github.com/dimerapp/slate-md-decorations/CHANGELOG.md) file.
 
 ## Contributing
 
 Everyone is welcome to contribute. Please take a moment to review the [contributing guidelines](CONTRIBUTING.md).
 
 ## Authors & License
-[thetutlage](https://github.com/thetutlage) and [contributors](https://github.com/thetutlage/slate-md-decorations/graphs/contributors).
+[dimerapp](https://github.com/dimerapp) and [contributors](https://github.com/dimerapp/slate-md-decorations/graphs/contributors).
 
 MIT License, see the included [MIT](LICENSE.md) file.
 
-[travis-image]: https://img.shields.io/travis/thetutlage/slate-md-decorations/master.svg?style=flat-square&logo=travis
-[travis-url]: https://travis-ci.org/thetutlage/slate-md-decorations "travis"
+[travis-image]: https://img.shields.io/travis/dimerapp/slate-md-decorations/master.svg?style=flat-square&logo=travis
+[travis-url]: https://travis-ci.org/dimerapp/slate-md-decorations "travis"
 
 [npm-image]: https://img.shields.io/npm/v/slate-md-decorations.svg?style=flat-square&logo=npm
 [npm-url]: https://npmjs.org/package/slate-md-decorations "npm"
