@@ -601,3 +601,14 @@ test('return decorations inside blockquote', (assert) => {
     }
   ])
 })
+
+test('do not parse when ignore node method returns false', (assert) => {
+  const template = 'Hello **world**'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node, function (node) {
+    return node.type !== 'paragraph'
+  })
+
+  assert.deepEqual(decorations, [])
+})

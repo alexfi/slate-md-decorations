@@ -20,9 +20,11 @@ const getDecorations = require('./src/getDecorations')
  *
  * @return {Array<Range>}
  */
-module.exports = function decorations (node) {
-  if (node.object !== 'block') {
-    return
+module.exports = function decorations (node, ignoreNode) {
+  ignoreNode = typeof (ignoreNode) === 'function' ? ignoreNode : function () { return true }
+
+  if (node.object !== 'block' || !ignoreNode(node)) {
+    return []
   }
 
   return getDecorations(
