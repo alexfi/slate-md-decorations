@@ -15,6 +15,10 @@ module.exports = {
   delete: require('./strike'),
   definition: require('./definition'),
   linkReference: require('./linkReference'),
-  paragraph: require('./paragraph'),
-  image: require('./image')
+  paragraph: require('./generics'),
+  blockquote: require('./generics'),
+  listItem: require('./generics'),
+  list: require('./generics'),
+  image: require('./image'),
+  heading: require('./heading')
 }

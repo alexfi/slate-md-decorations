@@ -9,9 +9,9 @@
 
 module.exports = function (textBlocks, { position }, { start, end, marks }) {
   return {
-    anchorKey: textBlocks[position.start.line - 1].key,
+    anchorKey: textBlocks[0].key,
     anchorOffset: start,
-    focusKey: textBlocks[position.end.line - 1].key,
+    focusKey: textBlocks[0].key,
     focusOffset: end,
     marks
   }

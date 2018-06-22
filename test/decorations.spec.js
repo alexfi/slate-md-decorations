@@ -494,3 +494,110 @@ test('return decorations for images with title and alt', (assert) => {
     }
   ])
 })
+
+test('return decorations for heading', (assert) => {
+  const template = '## Hello world'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 0,
+      focusKey: textLeaf.key,
+      focusOffset: 2,
+      marks: [{ type: 'headingHash' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 3,
+      focusKey: textLeaf.key,
+      focusOffset: 14,
+      marks: [{ type: 'headingText' }]
+    }
+  ])
+})
+
+test('return decorations for heading with link', (assert) => {
+  const template = '## [Hello world](foo.com)'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 0,
+      focusKey: textLeaf.key,
+      focusOffset: 2,
+      marks: [{ type: 'headingHash' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 3,
+      focusKey: textLeaf.key,
+      focusOffset: 25,
+      marks: [{ type: 'headingText' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 4,
+      focusKey: textLeaf.key,
+      focusOffset: 15,
+      marks: [{ type: 'linkText' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 17,
+      focusKey: textLeaf.key,
+      focusOffset: 24,
+      marks: [{ type: 'linkUrl' }]
+    }
+  ])
+})
+
+test('return decorations for heading with no content', (assert) => {
+  const template = '## '
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 0,
+      focusKey: textLeaf.key,
+      focusOffset: 2,
+      marks: [{ type: 'headingHash' }]
+    },
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 3,
+      focusKey: textLeaf.key,
+      focusOffset: 3,
+      marks: [{ type: 'headingText' }]
+    }
+  ])
+})
+
+test('return decorations inside blockquote', (assert) => {
+  const template = '> hello **world**'
+
+  const node = getNode(template)
+  const decorations = getDecorations(node)
+  const textLeaf = node.getTexts().toArray()[0]
+
+  assert.deepEqual(decorations, [
+    {
+      anchorKey: textLeaf.key,
+      anchorOffset: 8,
+      focusKey: textLeaf.key,
+      focusOffset: 17,
+      marks: [{ type: 'strong' }]
+    }
+  ])
+})
